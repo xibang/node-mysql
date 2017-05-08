@@ -1,11 +1,11 @@
-# Wulian-MySQL
+# Dwing-MySQL
 
-[![npm](https://img.shields.io/npm/v/wulian-mysql.svg?style=plastic)](https://npmjs.org/package/wulian-mysql) [![npm](https://img.shields.io/npm/dm/wulian-mysql.svg?style=plastic)](https://npmjs.org/package/wulian-mysql)  [![npm](https://img.shields.io/npm/dt/wulian-mysql.svg?style=plastic)](https://npmjs.org/package/wulian-mysql)
+[![npm](https://img.shields.io/npm/v/dwing-mysql.svg?style=plastic)](https://npmjs.org/package/dwing-mysql) [![npm](https://img.shields.io/npm/dm/dwing-mysql.svg?style=plastic)](https://npmjs.org/package/dwing-mysql)  [![npm](https://img.shields.io/npm/dt/dwing-mysql.svg?style=plastic)](https://npmjs.org/package/dwing-mysql)
 
 ## 安装
 
 ```
-npm install wulian-mysql --save
+npm install dwing-mysql --save
 ```
 
 ## 维护者
@@ -17,7 +17,7 @@ Willin: <https://github.com/willin> 求粉，求加组织
 ### POOL
 
 ```js
-import {pool} from 'wulian-mysql';
+import {pool} from 'dwing-mysql';
 
 (async(){
   // 传入配置，新建一个Pool，如果已有Pool则直接拿来使用
@@ -35,7 +35,7 @@ import {pool} from 'wulian-mysql';
 ### CONNECTION
 
 ```js
-import {connection} from 'wulian-mysql';
+import {connection} from 'dwing-mysql';
 
 (async(){
   // 传入配置，新建一个连接，，如果已有连接则直接拿来使用
@@ -52,7 +52,7 @@ import {connection} from 'wulian-mysql';
 ### 异常捕获
 
 ```js
-import {pool} from 'wulian-mysql';
+import {pool} from 'dwing-mysql';
 
 (async(){
   const cn = await pool({
@@ -61,7 +61,7 @@ import {pool} from 'wulian-mysql';
     password: 'root',
     database: 'test'
   }, console.log);
-  // 第二个参数传入你自己的处理事件 默认为 console.log('wulian:mysql:query', err);
+  // 第二个参数传入你自己的处理事件 默认为 console.log('dwing:mysql:query', err);
   console.log(await cn.query('SELECT 1'));
   cn.release();
 })();
@@ -70,7 +70,7 @@ import {pool} from 'wulian-mysql';
 ### FORMAT
 
 ```js
-import {pool, format} from 'wulian-mysql';
+import {pool, format} from 'dwing-mysql';
 
 (async(){
   const cn = await pool({
@@ -89,13 +89,13 @@ import {pool, format} from 'wulian-mysql';
 连接池：
 
 ```
-DEBUG=wulian:mysql:* babel-node examples/pool.js
+DEBUG=dwing:mysql:* babel-node examples/pool.js
 ```
 
 连接：
 
 ```
-DEBUG=wulian:mysql:* babel-node examples/connection.js
+DEBUG=dwing:mysql:* babel-node examples/connection.js
 ```
 
 玩命测试：

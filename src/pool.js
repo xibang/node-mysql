@@ -39,18 +39,18 @@ module.exports = async (options, logger = console.log) => {
 
   const result = {};
   result.query = (sql) => {
-    debug('wulian:mysql:query')(sql);
+    debug('dwing:mysql:query')(sql);
     const deferred = getDefer();
     db[key].acquire((err, client) => {
       if (err) {
-        logger('wulian:mysql:pool', err);
+        logger('dwing:mysql:pool', err);
         deferred.resolve({});
       } else {
         client.query(sql, [], (errQuery, rows) => {
           // return object back to pool
           db[key].release(client);
           if (errQuery) {
-            logger('wulian:mysql:query', errQuery);
+            logger('dwing:mysql:query', errQuery);
             db[key].release();
             createPool(key, options);
             deferred.resolve({});

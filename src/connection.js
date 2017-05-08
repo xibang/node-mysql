@@ -19,11 +19,11 @@ module.exports = async function createConnection(options, logger = console.log) 
 
   try {
     result.query = (sql) => {
-      debug('wulian:mysql:query')(sql);
+      debug('dwing:mysql:query')(sql);
       const deferred = getDefer();
       db[key].query(sql, (err, rows) => {
         if (err) {
-          logger('wulian:mysql:query', err);
+          logger('dwing:mysql:query', err);
           deferred.resolve({});
         }
         deferred.resolve(rows);
