@@ -6,37 +6,32 @@ const genericPool = require('generic-pool');
 const db = {};
 const createPool = (key, options) => {
   db[key] = genericPool.createPool({
-    name: 'mysql',
-    create: () => {
-      return new Promise(function (resolve, reject) {
-        const c = mysql.createConnection(options);
-        // parameter order: err, resource
-        c.on('error', () => {
-          c.end();
-        });
-        c.on('connected', function () {
-          resolve(c);
-        });
+    create: () => new Promise((resolve, reject) => {
+      const c = mysql.createConnection(options);
+      // parameter order: err, resource
+      c.connect((err) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(c);
       });
-    },
-    destroy: (client) => {
-      return new Promise(function (resolve) {
-        client.on('end', function () {
-          resolve();
-        });
-        client.disconnect();
-      })
-    }
+    }),
+    destroy: client => new Promise((resolve) => {
+      client.on('end', () => {
+        resolve();
+      });
+      client.disconnect();
+    })
   },
-  {
-    max: options.connectionLimit || 10,
-    // optional. if you set this, make sure to drain() (see step 3)
-    min: options.connectionLimitMin || 0,
-    // specifies how long a resource can stay idle in pool before being removed
-    idleTimeoutMillis: 30000,
-    // if true, logs via console.log - can also be a function
-    log: process.env.DEBUG !== undefined
-  });
+    {
+      max: options.connectionLimit || 10,
+      // optional. if you set this, make sure to drain() (see step 3)
+      min: options.connectionLimitMin || 0,
+      // specifies how long a resource can stay idle in pool before being removed
+      idleTimeoutMillis: 30000,
+      // if true, logs via console.log - can also be a function
+      log: process.env.DEBUG !== undefined
+    });
 };
 
 /**
@@ -55,23 +50,21 @@ module.exports = async (options, logger = console.log) => {
   result.query = (sql) => {
     debug('dwing:mysql:query')(sql);
     const deferred = getDefer();
-    db[key].acquire((err, client) => {
-      if (err) {
-        logger('dwing:mysql:pool', err);
-        deferred.resolve({});
-      } else {
-        client.query(sql, [], (errQuery, rows) => {
-          // return object back to pool
-          db[key].release(client);
-          if (errQuery) {
-            logger('dwing:mysql:query', errQuery);
-            db[key].release();
-            createPool(key, options);
-            deferred.resolve({});
-          }
-          deferred.resolve(rows);
-        });
-      }
+    db[key].acquire().then((client) => {
+      client.query(sql, [], (errQuery, rows) => {
+        // return object back to pool
+        db[key].release(client);
+        if (errQuery) {
+          logger('dwing:mysql:query', errQuery);
+          db[key].release();
+          createPool(key, options);
+          deferred.resolve({});
+        }
+        deferred.resolve(rows);
+      });
+    }).catch((err) => {
+      logger('dwing:mysql:pool', err);
+      deferred.resolve({});
     });
     return deferred.promise;
   };

@@ -13,7 +13,8 @@ module.exports = {
     "no-console": 1,
     "generator-star-spacing": 0,
     "no-param-reassign": [1, { "props": false }],
-    "consistent-return": 1
+    "consistent-return": 1,
+    "jsx-a11y/href-no-hash": 0
   },
   "extends": "airbnb"
 };
