@@ -1,4 +1,4 @@
-{
+module.exports = {
   "env": {
     "node": true,
     "es6": true
@@ -15,5 +15,5 @@
     "no-param-reassign": [1, { "props": false }],
     "consistent-return": 1
   },
-  "extends": "airbnb/base"
-}
+  "extends": "airbnb"
+};

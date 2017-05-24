@@ -1,21 +1,34 @@
 const mysql = require('mysql');
 const debug = require('debug');
-const { md5, getDefer } = require('dwing-common');
-const { Pool } = require('generic-pool');
+const { md5, getDefer } = require('@dwing/common');
+const genericPool = require('generic-pool');
 
 const db = {};
 const createPool = (key, options) => {
-  db[key] = new Pool({
+  db[key] = genericPool.createPool({
     name: 'mysql',
-    create: (callback) => {
-      const c = mysql.createConnection(options);
-      // parameter order: err, resource
-      c.on('error', () => {
-        c.end();
+    create: () => {
+      return new Promise(function (resolve, reject) {
+        const c = mysql.createConnection(options);
+        // parameter order: err, resource
+        c.on('error', () => {
+          c.end();
+        });
+        c.on('connected', function () {
+          resolve(c);
+        });
       });
-      callback(null, c);
     },
-    destroy: (client) => { client.end(); },
+    destroy: (client) => {
+      return new Promise(function (resolve) {
+        client.on('end', function () {
+          resolve();
+        });
+        client.disconnect();
+      })
+    }
+  },
+  {
     max: options.connectionLimit || 10,
     // optional. if you set this, make sure to drain() (see step 3)
     min: options.connectionLimitMin || 0,
@@ -25,6 +38,7 @@ const createPool = (key, options) => {
     log: process.env.DEBUG !== undefined
   });
 };
+
 /**
  * 创建连接池
  * @param  {obj} options MySQL连接参数

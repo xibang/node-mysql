@@ -1,23 +1,19 @@
-# Dwing-MySQL
+# Dwing MySQL
 
-[![npm](https://img.shields.io/npm/v/dwing-mysql.svg?style=plastic)](https://npmjs.org/package/dwing-mysql) [![npm](https://img.shields.io/npm/dm/dwing-mysql.svg?style=plastic)](https://npmjs.org/package/dwing-mysql)  [![npm](https://img.shields.io/npm/dt/dwing-mysql.svg?style=plastic)](https://npmjs.org/package/dwing-mysql)
+[![npm](https://img.shields.io/npm/v/@dwing/mysql.svg?style=plastic)](https://npmjs.org/package/@dwing/mysql) [![npm](https://img.shields.io/npm/dm/@dwing/mysql.svg?style=plastic)](https://npmjs.org/package/@dwing/mysql)  [![npm](https://img.shields.io/npm/dt/@dwing/mysql.svg?style=plastic)](https://npmjs.org/package/@dwing/mysql)
 
 ## 安装
 
 ```
-npm install dwing-mysql --save
+npm install @dwing/mysql --save
 ```
-
-## 维护者
-
-Willin: <https://github.com/willin> 求粉，求加组织
 
 ## ES7 使用
 
 ### POOL
 
 ```js
-import {pool} from 'dwing-mysql';
+const {pool} = require('@dwing/mysql');
 
 (async(){
   // 传入配置，新建一个Pool，如果已有Pool则直接拿来使用
@@ -35,7 +31,7 @@ import {pool} from 'dwing-mysql';
 ### CONNECTION
 
 ```js
-import {connection} from 'dwing-mysql';
+const {connection} = require('@dwing/mysql');
 
 (async(){
   // 传入配置，新建一个连接，，如果已有连接则直接拿来使用
@@ -52,7 +48,7 @@ import {connection} from 'dwing-mysql';
 ### 异常捕获
 
 ```js
-import {pool} from 'dwing-mysql';
+const {pool} = require('@dwing/mysql');
 
 (async(){
   const cn = await pool({
@@ -70,7 +66,7 @@ import {pool} from 'dwing-mysql';
 ### FORMAT
 
 ```js
-import {pool, format} from 'dwing-mysql';
+const {pool, format} = require('@dwing/mysql');
 
 (async(){
   const cn = await pool({
@@ -84,27 +80,3 @@ import {pool, format} from 'dwing-mysql';
 })();
 ```
 
-## 测试
-
-连接池：
-
-```
-DEBUG=dwing:mysql:* babel-node examples/pool.js
-```
-
-连接：
-
-```
-DEBUG=dwing:mysql:* babel-node examples/connection.js
-```
-
-玩命测试：
-
-```
-npm install -g pm2
-npm install babel-register
-cd examples
-pm2 start babel.json
-```
-
-然后看 `logs` 目录下的日志

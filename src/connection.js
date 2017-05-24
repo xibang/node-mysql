@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const debug = require('debug');
-const { md5, getDefer } = require('dwing-common');
+const { md5, getDefer } = require('@dwing/common');
 
 const db = {};
 /**
@@ -9,7 +9,7 @@ const db = {};
  * @return {obj} MySQL Connection
  */
 /* eslint no-console: 0 */
-module.exports = async function createConnection(options, logger = console.log) {
+module.exports = async (options, logger = console.log) => {
   const key = md5(JSON.stringify(options));
   if (!db[key]) {
     db[key] = mysql.createConnection(options);

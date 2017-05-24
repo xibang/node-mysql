@@ -1,13 +1,12 @@
 {
-  "name": "dwing-mysql",
-  "version": "1.0.1",
+  "name": "@dwing/mysql",
+  "version": "1.0.0",
   "description": "Node.js MySQL封装优化",
   "main": "src/index.js",
   "engines": {
     "node": ">= 7.3.0"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/airdwing/node-dwing-mysql.git"
@@ -28,12 +27,13 @@
   "devDependencies": {
     "eslint": "^3.2.2",
     "eslint-config-airbnb": "^10.0.0",
-    "eslint-plugin-import": "^1.12.0"
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3"
   },
   "dependencies": {
+    "@dwing/common": "*",
     "debug": "*",
     "generic-pool": "*",
-    "mysql": "*",
-    "dwing-common": "*"
+    "mysql": "*"
   }
 }
