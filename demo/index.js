@@ -7,10 +7,12 @@ const { pool } = require('../src');
     user: 'root',
     password: 'root'
   });
-  try {
-    const result = await mysql.query('select 1');
-    console.log(result);
-  } catch (e) {
-    console.log(e);
-  }
+  setInterval(async () => {
+    try {
+      const result = await mysql.query('select 1');
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }, 1000);
 })();

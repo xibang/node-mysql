@@ -8,6 +8,9 @@ const createPool = (key, options) => {
   db[key] = genericPool.createPool({
     create: () => new Promise((resolve, reject) => {
       const c = mysql.createConnection(options);
+      c.on('error', () => {
+        c.end();
+      });
       // parameter order: err, resource
       c.connect((err) => {
         if (err) {
