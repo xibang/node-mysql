@@ -4,37 +4,43 @@ const { md5, getDefer } = require('@dwing/common');
 const genericPool = require('generic-pool');
 
 const db = {};
-const createPool = (key, options) => {
-  db[key] = genericPool.createPool({
-    create: () => new Promise((resolve, reject) => {
-      const c = mysql.createConnection(options);
-      c.on('error', () => {
-        c.end();
-      });
-      // parameter order: err, resource
-      c.connect((err) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(c);
-      });
-    }),
-    destroy: client => new Promise((resolve) => {
-      client.on('end', () => {
-        resolve();
-      });
-      client.disconnect();
-    })
-  },
-    {
-      max: options.connectionLimit || 10,
-      // optional. if you set this, make sure to drain() (see step 3)
-      min: options.connectionLimitMin || 0,
-      // specifies how long a resource can stay idle in pool before being removed
-      idleTimeoutMillis: 30000,
-      // if true, logs via console.log - can also be a function
-      log: process.env.DEBUG !== undefined
+
+const factory = options => ({
+  create: () => new Promise((resolve, reject) => {
+    const c = mysql.createConnection(options);
+    c.on('error', () => {
+      // 判断错误类型,可能没必要关闭链接
+      c.end();
     });
+    // parameter order: err, resource
+    c.connect((err) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(c);
+    });
+  }),
+  destroy: client => new Promise((resolve) => {
+    // 改成 client.end()
+    client.on('end', () => {
+      resolve();
+    });
+    client.disconnect();
+  })
+});
+
+const poolOpts = options => ({
+  max: options.connectionLimit || 10,
+  // optional. if you set this, make sure to drain() (see step 3)
+  min: options.connectionLimitMin || 0,
+  // specifies how long a resource can stay idle in pool before being removed
+  idleTimeoutMillis: 30000,
+  // if true, logs via console.log - can also be a function
+  log: process.env.DEBUG !== undefined
+});
+
+const createPool = (key, options) => {
+  db[key] = genericPool.createPool(factory(options), poolOpts(options));
 };
 
 /**
@@ -43,7 +49,7 @@ const createPool = (key, options) => {
  * @return {obj} MySQL Pool
  */
 /* eslint no-console: 0 */
-module.exports = async (options, logger = console.log) => {
+module.exports = async (options, logger = console.error) => {
   const key = md5(JSON.stringify(options));
   if (!db[key]) {
     createPool(key, options);
@@ -58,10 +64,10 @@ module.exports = async (options, logger = console.log) => {
         // return object back to pool
         db[key].release(client);
         if (errQuery) {
-          logger('dwing:mysql:query', errQuery);
-          db[key].release();
-          createPool(key, options);
-          deferred.resolve({});
+          // if (errQuery.code === 'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR') {
+          //   createPool(key, options);
+          // }
+          deferred.reject(errQuery);
         }
         deferred.resolve(rows);
       });
