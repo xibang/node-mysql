@@ -24,7 +24,6 @@ const {pool} = require('@dwing/mysql');
     database: 'test'
   }); // 根据当前数据库配置创建一个连接
   console.log(await cn.query('SELECT 1'));
-  cn.release(); // 勿忘
 })();
 ```
 
@@ -59,7 +58,6 @@ const {pool} = require('@dwing/mysql');
   }, console.log);
   // 第二个参数传入你自己的处理事件 默认为 console.log('dwing:mysql:query', err);
   console.log(await cn.query('SELECT 1'));
-  cn.release();
 })();
 ```
 
@@ -76,7 +74,6 @@ const {pool, format} = require('@dwing/mysql');
     database: 'test'
   }, console.log);
   console.log(await cn.query(format('SELECT 1')));
-  cn.release();
 })();
 ```
 
