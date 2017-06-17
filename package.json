@@ -1,6 +1,6 @@
 {
   "name": "@dwing/mysql",
-  "version": "2.0.0-beta",
+  "version": "2.0.1",
   "description": "Node.js MySQL封装优化",
   "main": "src/index.js",
   "engines": {

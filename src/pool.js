@@ -14,7 +14,7 @@ const createPool = (key, options) => {
  * @return {obj} MySQL Pool
  */
 /* eslint no-console: 0 */
-module.exports = async (options, logger = console.log) => {
+module.exports = async (options) => {
   const key = md5(JSON.stringify(options));
   if (!db[key]) {
     createPool(key, options);
@@ -27,9 +27,6 @@ module.exports = async (options, logger = console.log) => {
     db[key].query(sql, [], (errQuery, rows, fields) => {
       // return object back to pool
       if (errQuery) {
-        console.log(errQuery.code);
-        console.log(errQuery.message);
-        logger('dwing:mysql:query', JSON.stringify(errQuery, null, 2));
         deferred.reject(errQuery);
       }
       if (returnFields) {
