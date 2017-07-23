@@ -30,7 +30,7 @@ module.exports = async (options) => {
         deferred.reject(errQuery);
       }
       if (returnFields) {
-        deferred.resolve({rows, fields});
+        deferred.resolve({ rows, fields });
       } else {
         deferred.resolve(rows);
       }
