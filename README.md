@@ -1,11 +1,12 @@
 # Dwing MySQL
 
-[![npm](https://img.shields.io/npm/v/@dwing/mysql.svg?style=plastic)](https://npmjs.org/package/@dwing/mysql) [![npm](https://img.shields.io/npm/dm/@dwing/mysql.svg?style=plastic)](https://npmjs.org/package/@dwing/mysql)  [![npm](https://img.shields.io/npm/dt/@dwing/mysql.svg?style=plastic)](https://npmjs.org/package/@dwing/mysql)
+[![github](https://img.shields.io/github/followers/willin.svg?style=social&label=Follow)](https://github.com/willin) [![npm](https://img.shields.io/npm/v/@dwing/mysql.svg)](https://npmjs.org/package/@dwing/mysql) [![npm](https://img.shields.io/npm/dt/@dwing/mysql.svg)](https://npmjs.org/package/@dwing/mysql) [![codecov](https://codecov.io/gh/AirDwing/node-dwing-mysql/branch/master/graph/badge.svg)](https://codecov.io/gh/AirDwing/node-dwing-mysql) [![Travis-CI](https://travis-ci.org/AirDwing/node-dwing-mysql.svg?branch=master)](https://travis-ci.org/AirDwing/node-dwing-mysql) [![codebeat badge](https://codebeat.co/badges/49922bb9-ef93-4286-9fd0-3c2f0d595f3c)](https://codebeat.co/projects/github-com-airdwing-node-dwing-mysql-master)
+
 
 ## 安装
 
 ```
-npm install @dwing/mysql --save
+yarn add @dwing/mysql
 ```
 
 ## ES7 使用

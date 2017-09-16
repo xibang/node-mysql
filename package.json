@@ -4,9 +4,34 @@
   "description": "Node.js MySQL封装优化",
   "main": "src/index.js",
   "engines": {
-    "node": ">= 7.3.0"
+    "node": ">= 8.0.0"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "nyc ava -vs",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov | codecov",
+    "start": "nyc --reporter html ava -vs && open ./.nyc_output/index.html"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js",
+      "!**/_*/*.js",
+      "!**/_*.js"
+    ]
+  },
+  "nyc": {
+    "lines": 80,
+    "check-coverage": true,
+    "reporter": [
+      "text-lcov"
+    ],
+    "report-dir": "./.nyc_output",
+    "exclude": [
+      "test",
+      "test{,-*}.js",
+      "**/*.test.js",
+      "**/__tests__/**"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/airdwing/node-dwing-mysql.git"
@@ -25,8 +50,11 @@
   },
   "homepage": "https://github.com/airdwing/node-dwing-mysql#readme",
   "devDependencies": {
-    "eslint": "^4.3.0",
-    "eslint-config-dwing": "^1.1.0"
+    "ava": "^0.22.0",
+    "codecov": "^2.3.0",
+    "eslint": "^4.7.0",
+    "eslint-config-dwing": "^1.1.0",
+    "nyc": "^11.2.1"
   },
   "dependencies": {
     "@dwing/common": "*",
