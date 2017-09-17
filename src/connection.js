@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const debug = require('debug');
-const { md5, getDefer } = require('@dwing/common');
+const { md5 } = require('@dwing/common');
+const { promisify } = require('util');
 
 const db = {};
 /**
@@ -9,29 +10,17 @@ const db = {};
  * @return {obj} MySQL Connection
  */
 /* eslint no-console: 0 */
-module.exports = async (options, logger = console.log) => {
+module.exports = (options = {}) => {
   const key = md5(JSON.stringify(options));
   if (!db[key]) {
     db[key] = mysql.createConnection(options);
   }
 
   const result = {};
-
-  try {
-    result.query = (sql) => {
-      debug('dwing:mysql:query')(sql);
-      const deferred = getDefer();
-      db[key].query(sql, (err, rows) => {
-        if (err) {
-          logger('dwing:mysql:query', err);
-          deferred.resolve({});
-        }
-        deferred.resolve(rows);
-      });
-      return deferred.promise;
-    };
-  } catch (err) {
-    result.query = () => null;
-  }
+  const promiseFn = promisify(db[key].query).bind(db[key]);
+  result.query = (sql) => {
+    debug('dwing:mysql:query')(sql);
+    return promiseFn(sql);
+  };
   return result;
 };

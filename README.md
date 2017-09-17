@@ -45,23 +45,6 @@ const {connection} = require('@dwing/mysql');
 })();
 ```
 
-### 异常捕获
-
-```js
-const {pool} = require('@dwing/mysql');
-
-(async(){
-  const cn = await pool({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'root',
-    database: 'test'
-  }, console.log);
-  // 第二个参数传入你自己的处理事件 默认为 console.log('dwing:mysql:query', err);
-  console.log(await cn.query('SELECT 1'));
-})();
-```
-
 ### FORMAT
 
 ```js
@@ -73,7 +56,7 @@ const {pool, format} = require('@dwing/mysql');
     user: 'root',
     password: 'root',
     database: 'test'
-  }, console.log);
+  });
   console.log(await cn.query(format('SELECT 1')));
 })();
 ```

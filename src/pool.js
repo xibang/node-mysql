@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const debug = require('debug');
-const { md5, getDefer } = require('@dwing/common');
+const { md5 } = require('@dwing/common');
+const { promisify } = require('util');
 
 const db = {};
 
@@ -14,29 +15,17 @@ const createPool = (key, options) => {
  * @return {obj} MySQL Pool
  */
 /* eslint no-console: 0 */
-module.exports = async (options) => {
+module.exports = (options = {}) => {
   const key = md5(JSON.stringify(options));
   if (!db[key]) {
     createPool(key, options);
   }
 
   const result = {};
-  result.query = (sql, returnFields = false) => {
+  const promiseFn = promisify(db[key].query).bind(db[key]);
+  result.query = (sql) => {
     debug('dwing:mysql:query')(sql);
-    const deferred = getDefer();
-    db[key].query(sql, [], (errQuery, rows, fields) => {
-      // return object back to pool
-      if (errQuery) {
-        deferred.reject(errQuery);
-      }
-      if (returnFields) {
-        deferred.resolve({ rows, fields });
-      } else {
-        deferred.resolve(rows);
-      }
-    });
-    return deferred.promise;
+    return promiseFn(sql);
   };
-
   return result;
 };
