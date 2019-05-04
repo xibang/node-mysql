@@ -1,5 +1,5 @@
 const { format } = require('mysql');
-const { isEmpty } = require('@dwing/common');
+const { isEmpty } = require('@xibang/node-common');
 
 exports.pool = require('./pool');
 exports.connection = require('./connection');

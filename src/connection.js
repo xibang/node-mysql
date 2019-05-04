@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const debug = require('debug');
-const { md5 } = require('@dwing/common');
+const { md5 } = require('@xibang/node-common');
 const { promisify } = require('util');
 
 const db = {};
@@ -19,7 +19,7 @@ module.exports = (options = {}) => {
   const result = {};
   const promiseFn = promisify(db[key].query).bind(db[key]);
   result.query = (sql) => {
-    debug('dwing:mysql:query')(sql);
+    debug('xibang:mysql:query')(sql);
     return promiseFn(sql);
   };
   return result;

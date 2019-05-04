@@ -1,12 +1,12 @@
-# Dwing MySQL
+# Xibang MySQL
 
-[![github](https://img.shields.io/github/followers/willin.svg?style=social&label=Follow)](https://github.com/willin) [![npm](https://img.shields.io/npm/v/@dwing/mysql.svg)](https://npmjs.org/package/@dwing/mysql) [![npm](https://img.shields.io/npm/dt/@dwing/mysql.svg)](https://npmjs.org/package/@dwing/mysql) [![codecov](https://codecov.io/gh/AirDwing/node-dwing-mysql/branch/master/graph/badge.svg)](https://codecov.io/gh/AirDwing/node-dwing-mysql) [![Travis-CI](https://travis-ci.org/AirDwing/node-dwing-mysql.svg?branch=master)](https://travis-ci.org/AirDwing/node-dwing-mysql) [![codebeat badge](https://codebeat.co/badges/49922bb9-ef93-4286-9fd0-3c2f0d595f3c)](https://codebeat.co/projects/github-com-airdwing-node-dwing-mysql-master)
+[![github](https://img.shields.io/github/followers/willin.svg?style=social&label=Followers)](https://github.com/willin) [![npm](https://img.shields.io/npm/v/@xibang/mysql.svg)](https://npmjs.org/package/@xibang/mysql) [![npm](https://img.shields.io/npm/dt/@xibang/mysql.svg)](https://npmjs.org/package/@xibang/mysql)
 
 
 ## 安装
 
 ```
-yarn add @dwing/mysql
+yarn add @xibang/mysql
 ```
 
 ## ES7 使用
@@ -14,7 +14,7 @@ yarn add @dwing/mysql
 ### POOL
 
 ```js
-const {pool} = require('@dwing/mysql');
+const { pool } = require('@xibang/mysql');
 
 (async(){
   // 传入配置，新建一个Pool，如果已有Pool则直接拿来使用
@@ -31,7 +31,7 @@ const {pool} = require('@dwing/mysql');
 ### CONNECTION
 
 ```js
-const {connection} = require('@dwing/mysql');
+const { connection } = require('@xibang/mysql');
 
 (async(){
   // 传入配置，新建一个连接，，如果已有连接则直接拿来使用
@@ -48,7 +48,7 @@ const {connection} = require('@dwing/mysql');
 ### FORMAT
 
 ```js
-const {pool, format} = require('@dwing/mysql');
+const { pool, format } = require('@xibang/mysql');
 
 (async(){
   const cn = await pool({
@@ -63,7 +63,7 @@ const {pool, format} = require('@dwing/mysql');
 
 ## License
 
-MIT
+Apache 2.0
 
 通过支付宝捐赠：
 
