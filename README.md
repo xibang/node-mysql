@@ -1,6 +1,7 @@
 # Xibang MySQL
 
-[![github](https://img.shields.io/github/followers/willin.svg?style=social&label=Followers)](https://github.com/willin) [![npm](https://img.shields.io/npm/v/@xibang/mysql.svg)](https://npmjs.org/package/@xibang/mysql) [![npm](https://img.shields.io/npm/dt/@xibang/mysql.svg)](https://npmjs.org/package/@xibang/mysql)
+[![github](https://img.shields.io/github/followers/willin.svg?style=social&label=Followers)](https://github.com/willin) [![npm](https://img.shields.io/npm/v/@xibang/mysql.svg)](https://npmjs.org/package/@xibang/mysql) [![npm](https://img.shields.io/npm/dt/@xibang/mysql.svg)](https://npmjs.org/package/@xibang/mysql) [![codecov](https://codecov.io/gh/xibang/node-mysql/branch/master/graph/badge.svg)](https://codecov.io/gh/xibang/node-mysql)
+ [![codebeat badge](https://codebeat.co/badges/2071aa7e-2a82-47f6-b221-1df44e05669e)](https://codebeat.co/projects/github-com-xibang-node-mysql-master) [![Build Status](https://travis-ci.org/xibang/node-mysql.svg?branch=master)](https://travis-ci.org/xibang/node-mysql)
 
 
 ## 安装
